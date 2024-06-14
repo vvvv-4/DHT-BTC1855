@@ -18,3 +18,15 @@ if (is.na(as.numeric(input)) || nchar(input) != 3 || as.numeric(input) <= 0) {
 first_num <- as.numeric(substr(input, 1, 1))
 second_num <- as.numeric(substr(input, 2, 2))
 third_num <- as.numeric(substr(input, 3, 3))
+
+# Get the sum of the cubes of the first three numbers
+sum_cubes <- (first_num)^3 + (second_num)^3 + (third_num)^3
+
+# Finally, check if the sum_cubes is the same as the original input
+
+if (sum_cubes == as.numeric(input)){
+  print(paste(input, "is a narcissistic number"))
+} else {
+  print(paste(input, "is not an Armstrong number"))
+}
+
