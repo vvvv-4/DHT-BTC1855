@@ -23,7 +23,6 @@ third_num <- as.numeric(substr(input, 3, 3))
 sum_cubes <- (first_num)^3 + (second_num)^3 + (third_num)^3
 
 # Finally, check if the sum_cubes is the same as the original input
-
 if (sum_cubes == as.numeric(input)){
   print(paste(input, "is a narcissistic number"))
 } else {
