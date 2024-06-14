@@ -13,5 +13,8 @@ if (is.na(as.numeric(input)) || nchar(input) != 3 || as.numeric(input) <= 0) {
 }
 
 # Checking if the input is narcissistic
-# Get the first, second, and third numbers from the user's input using the substr() function
-first_numr <- substr()
+# Get the first, second, and third numbers from the user's input using the 
+# substr() function and make that number numeric
+first_num <- as.numeric(substr(input, 1, 1))
+second_num <- as.numeric(substr(input, 2, 2))
+third_num <- as.numeric(substr(input, 3, 3))
