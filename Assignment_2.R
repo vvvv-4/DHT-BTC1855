@@ -5,16 +5,8 @@
 # Prompt the user to enter a three digit positive number
 number <- readline(prompt="Enter a three digit positive number: ")
 
-if (is.na(as.numeric(number))) {
-  print(paste(number, "is not numeric"))
-  stop()
+# Check if the user input is numeric. If not, print an error message and quit.
+if (is.na(as.numeric(number)) || nchar(number) != 3 || as.numeric(number) <= 0) {
+  stop("The input is either not numeric, not a three digit number, or not a positive number")
 }
 
-
-
-if (is.numeric(number)) {
-  print(paste(number, "is numeric"))
-} else if (!is.numeric(number)) {
-  print(paste(number, "is not numeric"))
-  stop()
-}
