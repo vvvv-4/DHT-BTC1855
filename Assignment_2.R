@@ -9,7 +9,8 @@ input <- readline(prompt="Enter a three digit positive number: ")
 # Then, if the numeric is not a positive number, report it to the user
 # Also check whether the numeric input is a three digit number, report it if its not
 # Finally, if the input is a three digit positive number, calculate the sum of the cubes
-# If the sum of the cubes is the same as the input, it is an 
+# If the sum of the cubes is the same as the input, print it is a narcissistic number
+# If the sum of the cube is not the same as the input, print it is not an Armstrong number
 
 
 # Check if the user input is numeric. If not, print an error message and quit. 
