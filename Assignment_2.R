@@ -5,6 +5,11 @@
 # Prompt the user to enter a three digit positive number
 input <- readline(prompt="Enter a three digit positive number: ")
 
+# Since the input is of class character, we can try to make it numeric as a 
+# way to assess whether the user input a number. If they don't input a number,
+# coercing them as numeric will result in NA.
+input_num <- as.numeric(input)
+
 # If the input is not a number, report it to the user
 # Then, if the numeric is not a positive number, report it to the user
 # Also check whether the numeric input is a three digit number, report it if its not
