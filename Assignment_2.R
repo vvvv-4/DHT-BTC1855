@@ -5,9 +5,16 @@
 # Prompt the user to enter a three digit positive number
 input <- readline(prompt="Enter a three digit positive number: ")
 
+# If the input is not a number, report it to the user
+# Then, if the numeric is not a positive number, report it to the user
+# Also check whether the numeric input is a three digit number, report it if its not
+# Finally, if the input is a three digit positive number, calculate the sum of the cubes
+# If the sum of the cubes is the same as the input, it is an 
+
+
 # Check if the user input is numeric. If not, print an error message and quit. 
 if (is.na(as.numeric(input)) || nchar(input) != 3 || as.numeric(input) <= 0) {
-  stop("The input is either not numeric, not a three digit number, or not a positive number")
+  print("The input is either not numeric, not a three digit number, or not a positive number")
 } else {
   print(paste("You have entered a three digit positive number: ", input))
 }
