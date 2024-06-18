@@ -10,8 +10,14 @@ input <- readline(prompt="Enter a three digit positive number: ")
 # coercing them as numeric will result in NA.
 input_num <- as.numeric(input)
 
-# If the input is not a number, report it to the user
-# Then, if the numeric is not a positive number, report it to the user
+if (is.na(input_num)){
+  # If the input is not a number, report it to the user
+  print(paste(input, "is not a number"))
+} else if (!is.na(input_num) & input_num <= 0) {
+  # Then, if the numeric is not a positive number, report it to the user
+  print(paste(input, "is not a positive number"))
+}
+
 # Also check whether the numeric input is a three digit number, report it if its not
 # Finally, if the input is a three digit positive number, calculate the sum of the cubes
 # If the sum of the cubes is the same as the input, print it is a narcissistic number
