@@ -16,9 +16,13 @@ if (is.na(input_num)){
 } else if (!is.na(input_num) & input_num <= 0) {
   # Then, if the numeric is not a positive number, report it to the user
   print(paste(input, "is not a positive number"))
-}
+} else if (!is.na(input_num) & nchar(input) != 3) {
+  # Also check whether the numeric input is a three digit number, report it 
+  # if its not
+  print(paste(input, "is not a three digit number"))
+} 
 
-# Also check whether the numeric input is a three digit number, report it if its not
+
 # Finally, if the input is a three digit positive number, calculate the sum of the cubes
 # If the sum of the cubes is the same as the input, print it is a narcissistic number
 # If the sum of the cube is not the same as the input, print it is not an Armstrong number
