@@ -27,7 +27,7 @@ if (is.na(input_num)){
   second_num <- as.numeric(substr(input, 2, 2))
   third_num <- as.numeric(substr(input, 3, 3))
   
-  sum_cubes - (first_num)^3 + (second_num)^3 + (third_num)^3
+  sum_cubes <- (first_num)^3 + (second_num)^3 + (third_num)^3
   
   if (sum_cubes == as.numeric(input)){
     # If the sum of the cubes is the same as the input, print it is a 
