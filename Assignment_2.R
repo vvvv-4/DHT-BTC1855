@@ -20,10 +20,18 @@ if (is.na(input_num)){
   # Also check whether the numeric input is a three digit number, report it 
   # if its not
   print(paste(input, "is not a three digit number"))
-} 
+} else {
+  # Finally, if the input is a three digit positive number, calculate the 
+  # sum of the cubes
+  first_num <- as.numeric(substr(input, 1, 1))
+  second_num <- as.numeric(substr(input, 2, 2))
+  third_num <- as.numeric(substr(input, 3, 3))
+  
+  sum_cubes - (first_num)^3 + (second_num)^3 + (third_num)^3
+  
+}
 
 
-# Finally, if the input is a three digit positive number, calculate the sum of the cubes
 # If the sum of the cubes is the same as the input, print it is a narcissistic number
 # If the sum of the cube is not the same as the input, print it is not an Armstrong number
 
