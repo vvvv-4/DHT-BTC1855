@@ -10,6 +10,11 @@ input <- readline(prompt="Enter a three digit positive number: ")
 # coercing them as numeric will result in NA.
 input_num <- as.numeric(input)
 
+# We'll combine all the assessment of the user's input into a single if 
+# condition, with else if and a nested if. First, we'll check the validity of 
+# the user's input before finally chekcing whether that input is a narcissistic/
+# Armstrong number or not
+
 if (is.na(input_num)){
   # If the input is not a number, report it to the user
   print(paste(input, "is not a number"))
@@ -23,6 +28,9 @@ if (is.na(input_num)){
 } else {
   # Finally, if the input is a three digit positive number, calculate the 
   # sum of the cubes
+  
+  # Isolate each character digit and make that numeric, allowing for 
+  # mathematical operations to be performed with it
   first_num <- as.numeric(substr(input, 1, 1))
   second_num <- as.numeric(substr(input, 2, 2))
   third_num <- as.numeric(substr(input, 3, 3))
