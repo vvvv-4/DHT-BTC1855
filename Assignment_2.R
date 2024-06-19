@@ -40,10 +40,10 @@ if (is.na(input_num)){
   if (sum_cubes == as.numeric(input)){
     # If the sum of the cubes is the same as the input, print it is a 
     # narcissistic number
-    print(paste(input, "is a narcissistic number"))
+    print(paste(input, "is a narcissistic number, great job!"))
   } else {
     # If the sum of the cube is not the same as the input, print it as 
     # its is not an Armstrong number
-    print(paste(input, "is not an Armstrong number"))
+    print(paste(input, "is not an Armstrong number, try again :(("))
   }
 }
