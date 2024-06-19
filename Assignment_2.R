@@ -2,6 +2,9 @@
 # 1007128127
 # BTC1855 Assignment 2
 
+# Note that while the Git repository is titled DHT-BTC1855, it will be specific
+# for this assignment.
+
 # Prompt the user to enter a three digit positive number
 input <- readline(prompt="Enter a three digit positive number: ")
 
