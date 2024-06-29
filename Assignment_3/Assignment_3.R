@@ -16,3 +16,4 @@ words2[[1]][1]
 answer <- sample(words, 1)
 answer
 
+print(paste("The length of the answer word is", nchar(answer)))
