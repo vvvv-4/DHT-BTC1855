@@ -5,22 +5,26 @@
 # Assuming that the words_list file is in the same directory as this file
 # Get the list of words from the words_list.txt file and make it into a vector
 words <- readLines("words_list.txt")
-words
+#words
 
 # other method to read the text file
-words2 <- read.delim("words_list.txt", header = FALSE)
-words2
-words2[[1]][1]
+#words2 <- read.delim("words_list.txt", header = FALSE)
+#words2
+#words2[[1]][1]
 
 # Randomly select 1 word from the list of words
-answer <- sample(words, 1)
-answer
+answer_key <- sample(words, 1)
+answer_key <- unlist(strsplit(answer_key, ""))
 
-print(paste("The length of the answer word is", nchar(answer)))
+print(paste("The length of the answer word is", length(answer_key)))
 
 # Initiate and report the number of tries the user has
 tries <- 5
 print(paste0("Guess this word. The number of tries you have is ", tries, ". Good Luck!"))
+user_answer <- rep("_", length(answer_key))
+
+# Initialize an empty vector for the correct guesses
+correct_letters <- vector() 
 
 user_input <- function(){
   # Want the question to be asked as least once
@@ -36,9 +40,19 @@ user_input <- function(){
   return(tolower(input))
 }
 
+
 user_input()
 
-
+while (tries != 0) {
+  cat("current progress: ", paste(user_answer, collapse = ""), "\n")
+  cat("remaining tries: ", tries)
+  
+  # get input from user
+  current <- user_input()
+  if (grepl(current, answer)) {
+    replace(user_answer, , answer)
+  }
+}
 
 
 
