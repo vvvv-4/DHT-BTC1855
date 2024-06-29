@@ -49,8 +49,18 @@ while (tries != 0) {
   
   # get input from user
   current <- user_input()
-  if (grepl(current, answer)) {
-    replace(user_answer, , answer)
+  
+  if (current %in% answer_key) {
+    cat("Nice, you have guessed a letter correctly!")
+    
+    # get the position of the guess
+    positions <- which(current == answer_key)
+    user_answer[positions] <- current
+    cat("current progress: ", paste(user_answer, collapse = ""), "\n")
+    correct_letters <- c(correct_letters, current)
+  } else {
+    tries = tries - 1
+    cat("Oops, incorrect guess. You now have ", tries, "remaining")
   }
 }
 
