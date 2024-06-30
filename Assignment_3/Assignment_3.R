@@ -24,7 +24,7 @@ print(paste0("Guess this word. The number of tries you have is ", tries, ". Good
 user_answer <- rep("_", length(answer_key))
 
 # Initialize an empty vector for the correct guesses
-correct_letters <- vector() 
+your_guesses <- vector() 
 
 user_input <- function(){
   # Want the question to be asked as least once
@@ -41,28 +41,36 @@ user_input <- function(){
 }
 
 
-user_input()
-
 while (tries != 0) {
   cat("current progress: ", paste(user_answer, collapse = ""), "\n")
-  cat("remaining tries: ", tries)
+  cat("your guesses so far are:", paste(your_guesses, collapse = ""), "\n")
+  cat("remaining tries: ", tries, "\n")
   
   # get input from user
   current <- user_input()
   
+  your_guesses <- c(your_guesses, current)
+  
   if (current %in% answer_key) {
-    cat("Nice, you have guessed a letter correctly!")
+    cat("Nice, you have guessed a letter correctly!", "\n")
     
     # get the position of the guess
     positions <- which(current == answer_key)
     user_answer[positions] <- current
-    cat("current progress: ", paste(user_answer, collapse = ""), "\n")
-    correct_letters <- c(correct_letters, current)
+    
+    if (identical(user_answer, answer_key)) {
+      cat("Congratulation!, you have guessed the word correctly:", paste(answer_key, collapse = ""))
+      break
+    }
+    
   } else {
     tries = tries - 1
-    cat("Oops, incorrect guess. You now have ", tries, "remaining")
+    cat("Oops, incorrect guess. You now have", tries, "tries remaining", "\n")
   }
 }
 
-
+if (tries == 0) {
+  cat("You ran out of tries, you lose :(", "\n")
+  cat("The correct answer is:", paste(answer_key, collapse = ""), "\n")
+}
 
