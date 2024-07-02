@@ -103,7 +103,7 @@ while (tries != 0) {
       # If the user has guessed the last letter such that the user's answer matches
       # the answer key, end the game and congratulate them
       if (identical(user_answer, answer_key)) {
-        cat("Congratulations! You have guessed the word correctly: ", 
+        cat("Congratulations! You have guessed the word correctly:", 
             paste(answer_key, collapse = ""))
         break
       }
@@ -118,7 +118,7 @@ while (tries != 0) {
   } else if (x == "word") {
     # If they guessed the answer key correctly, end the game and congratulate them
     if (y == paste(answer_key, collapse = "")) {
-      cat("Congratulations! You have guessed the word correctly: ", 
+      cat("Congratulations! You have guessed the word correctly:", 
           paste(answer_key, collapse = ""))
       break
     # If they guessed the word wrong, deduct 1 trial
