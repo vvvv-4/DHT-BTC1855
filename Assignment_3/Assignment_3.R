@@ -27,6 +27,7 @@ user_answer <- rep("_", length(answer_key))
 # Initialize an empty vector for the correct guesses
 your_guesses <- vector() 
 
+# Get the user input
 user_input <- function(your_guesses) {
   # Ask the user to choose whether they want to guess a letter or a word
   repeat {
