@@ -8,6 +8,8 @@ words <- readLines("words_list.txt")
 
 # Randomly select 1 word from the list of words
 answer_key <- sample(words, 1)
+# Splitting the answer key into a vector separating the individual letters would
+# aid later in checking whether the user's guess is in the answer key 
 answer_key <- unlist(strsplit(answer_key, ""))
 
 # Provide user the length of the answer
@@ -62,34 +64,72 @@ user_input <- function(your_guesses) {
   }
 }
 
+# Main loop for the hangman
+# A while loop is used such that the game keeps running until the user exhausted
+# all 5 of tries
 while (tries != 0) {
-  cat("current progress: ", paste(user_answer, collapse = ""), "\n")
-  cat("your guesses so far are:", paste(your_guesses, collapse = ""), "\n")
-  cat("remaining tries: ", tries, "\n")
+  # Show the user their current progress
+  cat("Current progress: ", paste(user_answer, collapse = ""), "\n")
+  # Show the user their guesses so far
+  cat("Your guesses so far are: ", paste(your_guesses, collapse = ""), "\n")
+  # Tell the user their remaining tries
+  cat("Remaining tries: ", tries, "\n")
   
-  # get input from user
-  current <- user_input(your_guesses)
+  # Get input from user by calling the user_input function
+  user_input_result <- user_input(your_guesses)
   
-  your_guesses <- sort(c(your_guesses, current))
+  # Since the input is a list with the type and the values, we isolate them into
+  # 2 variables, x and y
+  x <- user_input_result$input_type
+  y <- user_input_result$input_value
   
-  if (current %in% answer_key) {
-    cat("Nice, you have guessed a letter correctly!", "\n")
+  # Looking at the input type, enter this if condition if the input is a letter
+  if (x == "letter") {
+    # Update the user's guesses so far with the input value
+    your_guesses <- sort(c(your_guesses, y))
     
-    # get the position of the guess
-    positions <- which(current == answer_key)
-    user_answer[positions] <- current
-    
-    if (identical(user_answer, answer_key)) {
-      cat("Congratulations! You have guessed the word correctly:", paste(answer_key, collapse = ""))
-      break
+    # Continue to check whether the input value (the letter) is in the answer key
+    # If it is in the answer key, continue with this if conditional loop 
+    if (y %in% answer_key) {
+      cat("Nice, you have guessed a letter correctly!\n")
+      
+      # Get the position of the guess
+      positions <- which(y == answer_key)
+      # Update the user answer (the underlines showing the word) with the correct
+      # guess at its correct position
+      user_answer[positions] <- y
+      
+      # If the user has guessed the last letter such that the user's answer matches
+      # the answer key, end the game and congratulate them
+      if (identical(user_answer, answer_key)) {
+        cat("Congratulations! You have guessed the word correctly: ", 
+            paste(answer_key, collapse = ""))
+        break
+      }
+      
+    # If the input value (the letter) is not in the answer key, deduct 1 trial
+    } else {
+      tries <- tries - 1
+      cat("Oops, incorrect guess.\n")
     }
-    
-  } else {
-    tries = tries - 1
-    cat("Oops, incorrect guess.", "\n")
+  
+  # if the user decide to guess the word directly, enter this else if condition
+  } else if (x == "word") {
+    # If they guessed the answer key correctly, end the game and congratulate them
+    if (y == paste(answer_key, collapse = "")) {
+      cat("Congratulations! You have guessed the word correctly: ", 
+          paste(answer_key, collapse = ""))
+      break
+    # If they guessed the word wrong, deduct 1 trial
+    } else {
+      tries <- tries - 1
+      cat("Oops, incorrect guess.\n")
+    }
   }
 }
 
+# if the user ran out of tries, tell them they lose as the main loop for the
+# game will no longer run
 if (tries == 0) {
   cat("You ran out of tries, you lose :(", "\n")
   cat("The correct answer is:", paste(answer_key, collapse = ""), "\n")
