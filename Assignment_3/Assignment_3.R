@@ -25,22 +25,42 @@ user_answer <- rep("_", length(answer_key))
 # Initialize an empty vector for the correct guesses
 your_guesses <- vector() 
 
-user_input <- function(your_guesses){
-  # Want the question to be asked as least once
-  repeat{
-    input <- readline(prompt = "Enter a single letter: ")
-    # check if the input is a letter and a single character
-    if (input %in% your_guesses){
-      cat("You have already guessed this. Please enter a different letter.", "\n")
-    } else if (nchar(input) == 1 & grepl("^[a-zA-Z]$", input)) {
-      break
+user_input <- function(your_guesses) {
+  # Ask the user to choose whether they want to guess a letter or a word
+  repeat {
+    input_1 <- readline(prompt = "Guess a letter or a word? Choose 1 for letter, 2 for word: ")
+    # If user correctly entered either 1 or 2
+    if (input_1 == "1" | input_1 == "2") {
+      # If the user choose to guess a letter, ask the user to enter the letter
+      if (input_1 == "1") {
+        repeat {
+          input_2 <- readline(prompt = "Enter a single letter: ")
+          # Based on the letter input, do the following
+          if (input_2 %in% your_guesses) {
+            cat("You have already guessed this. Please enter a different letter.\n")
+          } else if (nchar(input_2) == 1 & grepl("^[a-zA-Z]$", input_2)) {
+            # Return a list specifying "letter" and the input value if the user 
+            # correctly enter a single letter
+            # Make the values lower case so that letter cases difference are ignored
+            # This is one way to exit the repeat loop
+            return(list(input_type = "letter", input_value = tolower(input_2)))
+          } else {
+            cat("Input is invalid. Please enter a single letter.\n")
+          }
+        }
+      } else if (input_1 == "2") {
+        # If the user wants to enter a word, record the word after making them
+        # all lowercase in a list with the type "word"
+        # This is a second way to exit the repeat loop
+        input_3 <- readline(prompt = "Enter a word: ")
+        return(list(input_type = "word", input_value = tolower(input_3)))
+      }
     } else {
-      cat("Input is invalid. Please enter a single letter", "\n")
+      # If the user incorrectly enters 1/2, ask it again and repeat the loop
+      cat("Please input either 1 or 2. 1 for letter and 2 for word.\n")
     }
   }
-  return(tolower(input))
 }
-
 
 while (tries != 0) {
   cat("current progress: ", paste(user_answer, collapse = ""), "\n")
