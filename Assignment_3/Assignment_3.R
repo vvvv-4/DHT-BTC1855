@@ -15,6 +15,10 @@ answer_key <- unlist(strsplit(answer_key, ""))
 # Provide user the length of the answer
 print(paste("The length of the answer word is", length(answer_key)))
 
+# Tell the user some additional rules
+print(paste("You can guess a letter or a word in each round"))
+print(paste("You'll lose a trial if you guessed a letter or word incorrectly"))
+
 # Initiate and report the number of tries the user has
 # Here, we set the number of tries the user have as 5. 
 tries <- 5
