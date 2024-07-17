@@ -94,12 +94,19 @@ summary(ufo_no_dupe$country)
 summary(ufo_no_dupe$shape)
 summary(ufo_no_dupe$duration.seconds)
 
+table(ufo_no_dupe$country, useNA = "ifany")
+
+table(ufo_no_dupe$shape, useNA = "ifany")
 
 
 
+# Standardize 'country' and 'shape' values to handle inconsistencies
+ufo_no_dupe$country <- toupper(ufo_no_dupe$country)
+ufo_no_dupe$shape <- tolower(ufo_no_dupe$shape)
 
-
-
+# Recheck frequency tables for 'country' and 'shape'
+table(ufo_no_dupe$country, useNA = "ifany")
+table(ufo_no_dupe$shape, useNA = "ifany")
 
 
 
