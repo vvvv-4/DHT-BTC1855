@@ -109,48 +109,68 @@ boxplot(ufo_work$duration.seconds)
 # We can look at the top 10 highest values
 head(sort(ufo_work$duration.seconds, decreasing = T), 10)
 
-# Taking only the 99th percentile
+# Let's now filter such that we're taking only the 99th percentile
 threshold <- quantile(ufo_work$duration.seconds, 0.99)
 ufo_work <- ufo_work %>%
   filter(duration.seconds <= threshold)
 
-# Visualize the distribution of duration.seconds
+# Then, we can use visualize them again. We'll also look at the distribution of duration.seconds
+# using the histogram plot
+boxplot(ufo_work$duration.seconds)
+# The boxplot looks much better but there's still a lot of high values/outliers
+# Plotting the histogram will also show this
 hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
-# Examine values at different percentiles
+# Let's now look at the values of the 80th - 100th percentile to choose for our next threshold 
+# when filtering the outliers
 quantile(ufo_work$duration.seconds, probs = seq(0.8, 1, by = 0.01))
 
-# Taking only the 90th percentile
+# It seems like there is a huge jump in the values from the 89th to 90th percentile. We'll just take
+# the 89th percentile to keep some of those outliers in our data and not significantly altering them
 threshold <- quantile(ufo_work$duration.seconds, 0.89)
 ufo_work <- ufo_work %>%
   filter(duration.seconds <= threshold)
 
+# Let's now plot the duration seconds frequency in a histogram. Filtering those outliers make the
+# distribution much clearer 
 hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
-boxplot(ufo_work$duration.seconds)
+# The boxplot also shows a much better distribution with fewer outlier. We can see an actual box now!
+boxplot(ufo_work$duration.seconds, main = "Boxplot of Duration of seconds")
 
-
-# Now, look at the summaries for the three variables of interest
+# Again, let's look at the summaries for the three variables of interest
 summary(ufo_work$country)
 summary(ufo_work$shape)
+# Looking at the summary of the duration.seconds variable, we have now make the mean closer
+# to the median after removing the large outliers
 summary(ufo_work$duration.seconds)
 
+# We can also see the total number of sightings by country
 table(ufo_work$country, useNA = "ifany")
 
+# And the total number of sightings for each shape
 table(ufo_work$shape, useNA = "ifany")
 
-# Standardize 'country' and 'shape' values to handle inconsistencies
+# Since two-letter countries are usually represented in capital letters, we can 
+# standardize them while ensuring the shape are all in lowercase
 ufo_work$country <- toupper(ufo_work$country)
 ufo_work$shape <- tolower(ufo_work$shape)
 
-# Recheck frequency tables for 'country' and 'shape'
+# Recheck frequency tables for country and shape
 table(ufo_work$country, useNA = "ifany")
 table(ufo_work$shape, useNA = "ifany")
 
-# It seems like comments with NUFORC Note indicate that the sighting might not
-# be a UFO but is some other objects like planets, starts, birds, etc
-# We should remove them too (those with nuforc in it)
+# It seems like some of the sightings might be hoax!!!
 
+# Looking at the comments, some of them mentioned "hoax" in it. But there's also one
+# sighting that comments saying "this is not a hoax"!!!
+
+# The comments with NUFORC Note also seem to indicate sightings that might not
+# be a UFO but is some other objects like planets, starts, birds, etc
+# We should remove them too (those with nuforc note in it)!!!
+
+# So, removing rows with "hoax" in the comments except the ones claiming that it's not
+# a hoax, and also those with NUFORC Note comments. We'll create a new variable called:
 ufo_hoax_removed <- ufo_work %>%
   filter(!(grepl("(?i)hoax", comments) & !grepl("(?i)this is not a hoax", comments)) &
            !grepl("(?i)NUFORC Note", comments))
