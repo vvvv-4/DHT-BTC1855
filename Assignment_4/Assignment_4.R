@@ -53,7 +53,7 @@ ufo_work <- ufo_work %>%
 ufo_work <- ufo_work %>%
   filter(!is.na(country) & country != "") %>%
   filter(!is.na(shape) & shape != "") %>%
-  filter(duration.seconds != 0.02)
+  filter(duration.seconds > 0.5)
 
 str(ufo_work)
 
@@ -79,10 +79,10 @@ ufo_work <- ufo_work %>%
 hist(ufo_work$duration.seconds, breaks = 100, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
 # Examine values at different percentiles
-quantile(ufo_work$duration.seconds, probs = seq(0.9, 1, by = 0.01))
+quantile(ufo_work$duration.seconds, probs = seq(0.8, 1, by = 0.01))
 
 # Taking only the 90th percentile
-threshold <- quantile(ufo_work$duration.seconds, 0.90)
+threshold <- quantile(ufo_work$duration.seconds, 0.89)
 ufo_work <- ufo_work %>%
   filter(duration.seconds <= threshold)
 
@@ -108,10 +108,19 @@ ufo_work$shape <- tolower(ufo_work$shape)
 table(ufo_work$country, useNA = "ifany")
 table(ufo_work$shape, useNA = "ifany")
 
+# It seems like comments with NUFORC Note indicate that the sighting might not
+# be a UFO but is some other objects like planets, starts, birds, etc
+# We should remove them too (those with nuforc in it)
 
+ufo_hoax_removed <- ufo_work %>%
+  filter(!(grepl("(?i)hoax", comments) & !grepl("(?i)this is not a hoax", comments)) &
+           !grepl("(?i)NUFORC Note", comments))
 
-
-
+# creating another column called report_delay, which is the time difference in 
+# days, between the date of the sighting and the date it was reported.
+ufo_hoax_removed <- ufo_hoax_removed %>%
+  mutate(report_delay = as.numeric(difftime(date_posted, datetime, units = "days"))) %>%
+  filter(report_delay >= 0)
 
 
 
