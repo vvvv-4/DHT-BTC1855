@@ -31,32 +31,45 @@ summary(ufo)
 # Let's create a new dataset that we'll work on called ufo_work
 ufo_work <- ufo
 
-## convert datetime into date 
+# Fixing the structural issues
+# First, we'll convert the datetime structure into a POSIXct which can store date
+# and time in the correct format. Here, we specify year-month-day-hour-minute.
+# This function is part of the lubridate package that we have loaded earlier.
 ufo_work$datetime <- ymd_hm(ufo_work$datetime)
 
+# We can confirm that we have changed the structure of the datetime variable
 str(ufo_work$datetime)
 
-## convert date_posted into date
+# Similarly, we'll convert date_posted into a POSIXct structure to make it similar
+# with the datetime variable's structure and format
 
+# Since the date_posted values are in character, we'll convert it to the date structure
+# first using the dmy function in the lubridate package. It will conveniently convert
+# it to a year-month-day format
 ufo_work$date_posted <- dmy(ufo_work$date_posted)
 
+# Here, we'll see that it now has a date structure
 str(ufo_work$date_posted)
 
-# converting date_posted into posixct
+# Now, we can convert date_posted into the POSIXct structure
 ufo_work$date_posted <- as.POSIXct(ufo_work$date_posted)
 
+# Again, confirming that it is now in the POSIXct structure
 str(ufo_work$date_posted)
 
-## change the duration.hours.min columns so that they report the hours and minutes based on the duration.seconds and make it consistent
-
+# Another notable issue with the dataset is that the duration.hours.min variable is
+# not consistent across the rows. We can make them consistent by giving the hour:minutes
+# based on the respective duration.seconds variable
 ufo_work <- ufo_work %>%
   mutate(duration.hours.min = paste(floor(duration.seconds / 3600), 
                                     floor((duration.seconds %% 3600) / 60), 
                                     sep = ":"))
 
+# We can do a final check of the structure before continuing on to content cleaning. I think
+# we have fixed all the necessary issues in the structure
 str(ufo_work)
 
-# Identify and remove duplicate entries
+# One common content issue is duplicate entries, so we can first remove them
 ufo_work <- ufo_work %>%
   distinct()
 
