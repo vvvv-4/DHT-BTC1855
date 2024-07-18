@@ -73,26 +73,40 @@ str(ufo_work)
 ufo_work <- ufo_work %>%
   distinct()
 
-# Remove rows with missing `country` values
-# It seems like seconds 0.02 is problematic by looking at the comments
+# Another common content issue is missing values. Since we are interested in the "country,"
+# "shape," and "duration.seconds" variables, we can look specifically at them
+sum(is.na(ufo_work$country))
+sum(is.na(ufo_work$shape))
+sum(is.na(ufo_work$duration.seconds))
+
+# Interestingly, they all result in 0 entries having NAs. However, by inspecting the
+# data themselves, we do see missing values. Perhaps these missing values are empty
+# strings. We can now check on those
+sum(ufo_work$country == "")
+sum(ufo_work$shape == "")
+sum(ufo_work$duration.seconds == "")
+
+# It is indeed true that the missing values are listed as empty strings. We can remove that
+# It also appears that there are no missing values in the duration.seconds. However, we
+# can see that there are several entries where the sightings are very brief (<0.5 s).
+# I personally find them suspicious, so I would like to exclude them as well!
 ufo_work <- ufo_work %>%
   filter(!is.na(country) & country != "") %>%
   filter(!is.na(shape) & shape != "") %>%
   filter(duration.seconds > 0.5)
 
+# Again, we can inspect the structures and the summary of the content in each variables
 str(ufo_work)
-
 summary(ufo_work)
 
+# As previously mentioned, looking at the summary, we can see that the maximum duration.seconds 
+# values may be a little suspicious (82800000)
 
-# Check for missing values in 'country', 'shape', and 'duration.seconds'
-sum(is.na(ufo_work$country))
-sum(is.na(ufo_work$shape))
-sum(is.na(ufo_work$duration.seconds))
-
-# Look at the distribution in duration.seconds using boxplot
+# We can look at the distribution in duration.seconds using boxplot to see any outliers
 boxplot(ufo_work$duration.seconds)
 
+# There appear to be quite a few outliers in this data set, specifically very high values
+# We can look at the top 10 highest values
 head(sort(ufo_work$duration.seconds, decreasing = T), 10)
 
 # Taking only the 99th percentile
