@@ -2,24 +2,36 @@
 # 1007128127
 # BTC1855 Assignment 4
 
+# Reviewer is advised to place this file on the same working directory as the ufo_subset.csv file
+
+# We'll start by loading the necessary packages, which are the dplyr and lubridate packages
 library(dplyr)
-# Read the ufo_subset data into a data frame
+library(lubridate)
+
+# Read the ufo_subset data into a dataframe
 ufo <- read.csv("ufo_subset.csv")
 
+# Check that the ufo dataset is of class dataframe
 class(ufo)
 
-# check and correct structural issue
-
+# check for any structural issues in the variables within the ufo dataframe
+# We'll see that two variables have incorrect structure, which are the datetime
+# and the date_posted variables. Being a date, they should not be structured
+# as a character
 str(ufo)
 
+# We can also see a summary of the data to inspect for any content issues 
+# We can flag an issue with the duration.seconds variable, where the maximum
+# value is 82800000
 summary(ufo)
 
-# Create a copy of the orignial dataset
+# Before continuing with any cleaning and analysis, we'll want to keep a copy of
+# the orignial dataset
+
+# Let's create a new dataset that we'll work on called ufo_work
 ufo_work <- ufo
 
 ## convert datetime into date 
-library(lubridate)
-
 ufo_work$datetime <- ymd_hm(ufo_work$datetime)
 
 str(ufo_work$datetime)
