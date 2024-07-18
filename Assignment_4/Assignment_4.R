@@ -103,7 +103,7 @@ summary(ufo_work)
 # values may be a little suspicious (82800000)
 
 # We can look at the distribution in duration.seconds using boxplot to see any outliers
-boxplot(ufo_work$duration.seconds)
+boxplot(ufo_work$duration.seconds, main = "Boxplot of UFO sighting duration in seconds", ylab = "seconds")
 
 # There appear to be quite a few outliers in this data set, specifically very high values
 # We can look at the top 10 highest values
@@ -116,7 +116,7 @@ ufo_work <- ufo_work %>%
 
 # Then, we can use visualize them again. We'll also look at the distribution of duration.seconds
 # using the histogram plot
-boxplot(ufo_work$duration.seconds)
+boxplot(ufo_work$duration.seconds, main = "Boxplot of UFO sighting duration in seconds", ylab = "seconds")
 # The boxplot looks much better but there's still a lot of high values/outliers
 # Plotting the histogram will also show this
 hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
@@ -136,7 +136,7 @@ ufo_work <- ufo_work %>%
 hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
 # The boxplot also shows a much better distribution with fewer outlier. We can see an actual box now!
-boxplot(ufo_work$duration.seconds, main = "Boxplot of Duration of seconds")
+boxplot(ufo_work$duration.seconds, main = "Boxplot of UFO sighting duration in seconds", ylab = "seconds")
 
 # Again, let's look at the summaries for the three variables of interest
 summary(ufo_work$country)
@@ -177,15 +177,22 @@ ufo_hoax_removed <- ufo_work %>%
 
 # creating another column called report_delay, which is the time difference in 
 # days, between the date of the sighting and the date it was reported.
+# We'll also filter the sightings that were reported before it happened by selecting
+# only those sightings with a positive report_delay.
 ufo_hoax_removed <- ufo_hoax_removed %>%
   mutate(report_delay = as.numeric(difftime(date_posted, datetime, units = "days"))) %>%
   filter(report_delay >= 0)
 
+# We can then create a table with the average report_delay per country by first grouping
+# the dataset by country and getting the mean of the report_delay
 average_report_delay <- ufo_hoax_removed %>%
   group_by(country) %>%
   summarize(average_report_delay = mean(report_delay))
 
+# Here is the resulting average_report_delay per county
 average_report_delay
 
-hist(ufo_hoax_removed$duration.seconds)
+# Finally, we can look at the final distribution of duration.seconds using a histogram
+hist(ufo_hoax_removed$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
+# Looking at the resulting graph, we can see that most of the sightings are about 0-100 seconds long.
 
