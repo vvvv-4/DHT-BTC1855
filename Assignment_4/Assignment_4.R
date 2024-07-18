@@ -76,7 +76,7 @@ ufo_work <- ufo_work %>%
   filter(duration.seconds <= threshold)
 
 # Visualize the distribution of duration.seconds
-hist(ufo_work$duration.seconds, breaks = 100, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
+hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
 # Examine values at different percentiles
 quantile(ufo_work$duration.seconds, probs = seq(0.8, 1, by = 0.01))
@@ -86,7 +86,7 @@ threshold <- quantile(ufo_work$duration.seconds, 0.89)
 ufo_work <- ufo_work %>%
   filter(duration.seconds <= threshold)
 
-hist(ufo_work$duration.seconds, breaks = 100, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
+hist(ufo_work$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 
 boxplot(ufo_work$duration.seconds)
 
@@ -122,5 +122,11 @@ ufo_hoax_removed <- ufo_hoax_removed %>%
   mutate(report_delay = as.numeric(difftime(date_posted, datetime, units = "days"))) %>%
   filter(report_delay >= 0)
 
+average_report_delay <- ufo_hoax_removed %>%
+  group_by(country) %>%
+  summarize(average_report_delay = mean(report_delay))
 
+average_report_delay
+
+hist(ufo_hoax_removed$duration.seconds)
 
