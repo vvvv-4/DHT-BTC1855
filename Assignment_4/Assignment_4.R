@@ -196,3 +196,16 @@ average_report_delay
 hist(ufo_hoax_removed$duration.seconds, main = "Histogram of Duration Seconds", xlab = "Duration Seconds")
 # Looking at the resulting graph, we can see that most of the sightings are about 0-100 seconds long.
 
+#########CodeReview: Mingwei##############
+#Interesting use of the lubridate package, I believe its for the ymd functions? 
+#At the beginning, could choose to separate time and date into different columns when converting to posix
+#This might make it more handy for future calculations
+
+#Interesting choice for you to remove outliers, 
+#The incidences for the those top 1% in duration of observation seemed legit when reading through their comment s
+#Personally I could keep only one column out of the two, either the H:M or the Sec columns for duration
+#This could avoid redundancy.
+
+#For filtering HOAX, I think it is nice that you filter for NUFORC note in addition to identifying hoax in the comment section.
+#Also you approached the data in a step-wise manner with all your steps outlines, I thing that as well 
+#Its also nice to see that you have kept an original copy of the code stored as ufo, and worked on a separate copy
